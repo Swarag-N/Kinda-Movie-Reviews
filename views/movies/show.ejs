@@ -1,0 +1,45 @@
+<% include ../partials/header %>
+<!-- <%=currentUser%> -->
+	<div class="container">
+		<div class="row mt-5">
+			<div class="col-md-3">
+				<p class="lead">Movies</p>
+				<ul class="list-group">
+  					<li class="list-group-item active">Cras justo odio</li>
+  					<li class="list-group-item">Dapibus ac facilisis in</li>
+  					<li class="list-group-item">Morbi leo risus</li>
+				</ul>
+			</div>
+			<div class="col-md-9">
+				<div class="card">
+					<img src="<%=movie.url%>" class="card-img-top" >
+  					<div class="card-body">
+						<h3 class="card-title"><%=movie.title%></h3>
+						<p class="card-text"><%=movie.author.username%></p>
+						<p class="card-text"><%=movie.description%></p>
+						<%if(currentUser && movie.author.id.equals(currentUser._id)){%>
+							<a href="/movies/<%=movie._id%>/edit" class="btn btn-primary">Edit</a>
+							<form class="delete-form" action="/movies/<%=movie._id%>?_method=delete" method="POST" >
+							<button class="btn btn-danger">Delete</button>
+							</form>
+						<%}%>	
+					</div>
+					<div class="card-footer text-muted">
+						<a href="<%=movie._id%>/comments/new"class="btn btn-outline-secondary text-right">Add a Comment</a>
+						<hr>
+						<%movie.comments.forEach((comment)=>{%>
+							<strong><%=comment.author.username%></strong><%=comment.text%>
+							<%if(currentUser && comment.author.id.equals(currentUser._id)){%>
+								<a class="btn btn-xs btn-warning" href="/movies/<%=movie._id%>/comments/<%=comment._id%>/edit">Edit</a>
+								<form class="delete-form" action="/movies/<%=movie._id%>/comments/<%=comment._id%>?_method=DELETE" method="Post">	
+								<button class="btn btn-xs btn-danger ">Delete</button>
+							<%}%>
+							</form>
+							<hr>
+						<%})%>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<% include ../partials/footer %>

@@ -1,0 +1,22 @@
+<% include ../partials/header %>
+<h1 class=" d-flex justify-content-center">
+	Adding Movies
+</h1>
+<div class=row>
+	<form action="/movies" class="mx-auto" method="POST">
+		<div class="form-group">
+			<input class="form-control " type="text" name="mName" placeholder="Name of the Movie" required>
+		</div>
+		<div class="form-group">
+			<input class="form-control " type="text" name="mUrl" placeholder="Url of the Movie" required>
+		</div>
+		<div class="form-group">
+			<input class="form-control " type="text" name="mDescription" placeholder="Description of the Movie" required>
+		</div>
+		<div class="form-group">
+			<input class="btn  form-control btn-primary" type="submit">
+		</div>
+	</form>
+</div>
+<a href="/movies">Go Back </a>
+<% include ../partials/footer %>

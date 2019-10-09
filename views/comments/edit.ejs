@@ -1,0 +1,16 @@
+<% include ../partials/header %>
+<h1 class=" d-flex justify-content-center">
+	Editing The Comment =>.
+</h1>
+<div class=row>
+	<form action="/movies/<%=movie%>/comments/<%=comment._id%>?_method=PUT" class="mx-auto" method="POST">
+		<div class="form-group">
+			<input class="form-control " type="text" name="com[text]" placeholder="Comment" value="<%=comment.text%>"required>
+		</div>
+		<div class="form-group">
+			<input class="btn  form-control btn-primary" type="submit">
+		</div>
+	</form>
+</div>
+<a href="/movies">Go Back </a>
+<% include ../partials/footer %>

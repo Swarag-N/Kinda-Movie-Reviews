@@ -1,0 +1,24 @@
+<% include ../partials/header %>
+<div class="container">	
+<header class="jumbotron mt-5">
+	<div class="container">	
+		<h1 class="display-4">All Movies</h1>
+  			<p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+		<a class="btn btn-primary btn-lg" href="/movies/new" role="button">Add a New Movie</a>
+	</div>
+</header>
+
+<div class="row" style="display:flex; flex-wrap: wrap;">
+	<% list.forEach((movies)=>{ %>
+	<div class="col-md-3 col-sm-12 mx-1"> 
+		<div class="card mx-auto" >
+			<img src="<%=movies.url%>" class="card-img-top" alt="...">
+			<div class="card-body">
+				<%= movies.title %>
+			</div>
+			<a href="movies/<%=movies._id%>" class="btn btn-warning">More Info</a>
+		</div>
+	</div>
+	<%})%>
+</div>
+<% include ../partials/footer %>
