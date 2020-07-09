@@ -1,4 +1,4 @@
-var express			= require('express'),
+const express		= require('express'),
 	apk 			= express(),
 	bodyParser		= require('body-parser'),
 	mongoose 		= require('mongoose'),
@@ -11,17 +11,20 @@ var express			= require('express'),
 	flash 			= require('connect-flash'),
 	Comment 		= require("./models/comment.js");
 
-var commentRoutes = require("./routes/comments"),
+const commentRoutes = require("./routes/comments"),
 	moviesRoutes = require("./routes/movies"),
 	indexRoutes = require("./routes/index");
 
-// seedDB();
+const DB_URL=process.env.DB_URL || "mongodb://localhost/movies3";
 
 apk.set("view engine", "ejs");
 apk.use(bodyParser.urlencoded({extended: true}));
 apk.use(express.static(__dirname+"/public"));
 apk.use(methodOveride("_method"));
-mongoose.connect("mongodb://localhost/movies3", { useNewUrlParser: true});
+
+mongoose.connect(DB_URL, { useNewUrlParser: true, useUnifiedTopology: true});
+
+
 mongoose.set('useFindAndModify', false);
 apk.use(require("express-session")({
 	secret:"I have to complete this by today",
@@ -54,7 +57,6 @@ apk.use("/movies/:id/comments",commentRoutes);
 apk.get("*",(request,respond)=>{
 	respond.send("Use a Valid Url");
 });
-apk.listen(3000,()=>{
-	console.log("Movies In Progress");
-	// console.log(process.env);
+apk.listen(process.env.PORT,process.env.IP,()=>{
+	console.log(process.env.PORT,process.env.IP);
 });
