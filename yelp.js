@@ -9,18 +9,22 @@ const express		= require('express'),
 	methodOveride	= require('method-override'),
 	User			= require('./models/user.js'),
 	flash 			= require('connect-flash'),
+	logger 			=require('morgan')
 	Comment 		= require("./models/comment.js");
 
 const commentRoutes = require("./routes/comments"),
 	moviesRoutes = require("./routes/movies"),
 	indexRoutes = require("./routes/index");
 
-const DB_URL=process.env.DB_URL || "mongodb://localhost/movies3";
+const DB_URL=process.env.DB_URL || "mongodb://localhost:27017/movies3";
+const PORT = process.env.PORT ||3000;
+// const IP = process.env.IP || "127.0.0.1"
 
 apk.set("view engine", "ejs");
 apk.use(bodyParser.urlencoded({extended: true}));
 apk.use(express.static(__dirname+"/public"));
 apk.use(methodOveride("_method"));
+apk.use(logger('dev'));
 
 mongoose.connect(DB_URL, { useNewUrlParser: true, useUnifiedTopology: true});
 
@@ -57,6 +61,6 @@ apk.use("/movies/:id/comments",commentRoutes);
 apk.get("*",(request,respond)=>{
 	respond.send("Use a Valid Url");
 });
-apk.listen(process.env.PORT,process.env.IP,()=>{
+apk.listen(PORT,()=>{
 	console.log(process.env.PORT,process.env.IP);
 });

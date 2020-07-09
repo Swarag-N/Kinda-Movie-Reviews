@@ -4,13 +4,9 @@ var express = require("express"),
 	Movie 	= require("../models/movies");
 // Index Page 
 router.get("/",(request,respond)=>{
-	console.log("++++++++++++++++++++++++++++");
-	console.log(request.user);
-	console.log("++++++++++++++++++++++++++++");
 	Movie.find(function(err,movie){
 				if(err)
 					{
-				console.log("There is an Error parsing when getting data");
 				console.log(err);
 					}else{
 			   respond.render("movies/index",{ list:movie, currentUser:request.user});
@@ -37,9 +33,6 @@ router.post("/",middleware.isLoggedIn,(request,respond)=>{
 	Movie.create(nMlist,(err,New_movie)=>{
 		if(err){
 			console.log("Error While adding Data To Db");
-			console.log(err);
-		}else{
-			console.log(New_movie);
 		}
 	});
 	request.flash("success","Movie Added");
@@ -57,8 +50,6 @@ router.get("/:movieId",(request,respond)=>{
 		if (err){
 		console.log(err);
 	}else{
-		console.log("Showing:=>");
-		// console.log(foundMovie);
 		respond.render("movies/show",{movie:foundMovie, currentUser:request.user});
 	}
 	});
@@ -73,7 +64,6 @@ router.get("/:id/edit",middleware.checkMovieOwnership,(request,respond)=>{
 router.put("/:id",middleware.checkMovieOwnership,(request,respond)=>{
 	Movie.findByIdAndUpdate(request.params.id,request.body.m,(err,updatedMovie)=>{
 		if(err){
-			console.log(err);
 			respond.redirect("/movies");
 		}else{
 			// console.log(request.body.m);
@@ -100,19 +90,3 @@ router.delete("/:id",middleware.checkMovieOwnership,(request,respond)=>{
 
 
 module.exports = router;
-
-
-// var newMovie = {
-// 	title:"Harry",
-// 	url:"https://www.harrypotterfanzone.com/wp-content/2015/07/goblet-of-fire-cedric-and-cho-poster.jpg",
-// 	description:"dkjfkbjsdfjdbljdfjlsdnfljdfljsdjlfsdjfj sdjbjlsdjfbjdfbjfd"
-// };
-
-// Movie.create(newMovie,(err,savedMovie)=>{
-// 	if(err){
-// 		console.log(err);
-// 	}else{
-// 		console.log(savedMovie);
-// 	}
-// });
-

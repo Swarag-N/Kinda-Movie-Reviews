@@ -20,8 +20,6 @@ router.get("/register",(request,respond)=>{
 
 //Sign Up Logic
 router.post("/register",(request,respond)=>{
-	console.log(request.body.username);
-	console.log("==============================================");
 	var newUser = new User({username:request.body.username});
 	User.register(newUser,request.body.password,(err,createdUser)=>{
 		if(err){
@@ -30,7 +28,6 @@ router.post("/register",(request,respond)=>{
 			request.flash("error",err.message);
 			return respond.redirect("register");
 		}
-		console.log("createdUser ============");
 		console.log(createdUser.username);
 		request.flash("success","You Have created a account");
 		passport.authenticate("local")(request,respond,()=>{respond.redirect("/movies");});
@@ -39,24 +36,17 @@ router.post("/register",(request,respond)=>{
 
 //LOgin Form 
 router.get("/login",(request,respond)=>{
-	console.log("Login req");
 	console.log(request.flash("error"));
 	respond.render("login");
 });
 
 
 //apk.post("/login", middleware,callback)
-router.post("/login",passport.authenticate("local",
-		{
-		successRedirect:"/movies",
-		failureRedirect:"/login"}),
-		 (request,respond)=>{
-});
+router.post("/login",passport.authenticate(
+	"local",{ successRedirect:"/movies",failureRedirect:"/login"}),(request,respond)=>{});
 
 //LogOut Route
 router.get("/logout",(request,respond)=>{
-	console.log("LogOUt");
-	console.log("==============================================");
 	request.flash("success","loged you out");
 	request.logout();
 	respond.redirect("/movies");

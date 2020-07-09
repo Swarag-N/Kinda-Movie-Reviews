@@ -32,10 +32,8 @@ router.post("/",middleware.isLoggedIn,(request,respond)=>{
 					newComment.author.id = request.user._id;
 					newComment.author.username = request.user.username;
 					newComment.save();
-					console.log(newComment);
 					foundMovie.comments.push(newComment);
 					foundMovie.save();
-					console.log("Adding Comment to :: "+foundMovie.title);
 					request.flash("success","Successfully Comment Added");
 					respond.redirect("/movies/"+foundMovie._id);
 				}
@@ -49,7 +47,6 @@ router.get("/:comment_id/edit",middleware.checkCommentOwnership,(request,respond
 		if(err){
 			request.flash("error","Something went wrong");
 			respond.redirect("back");
-			console.log(err);
 		}else{
 			respond.render("comments/edit",{movie:request.params.id,comment:foundComment});
 		}
@@ -61,7 +58,6 @@ router.put("/:comment_id",middleware.checkCommentOwnership,(request,respond)=>{
 		if(err){
 			respond.redirect("back");
 		}else{
-			console.log(updatedComment);
 			respond.redirect("/movies/"+request.params.id);
 		}
 	});
